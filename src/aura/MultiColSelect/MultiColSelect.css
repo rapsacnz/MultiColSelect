@@ -1,0 +1,12 @@
+.THIS {
+}
+
+.THIS .spear-focus {
+  outline: #1589ee auto 5px;
+  outline-color: #1589ee;
+  outline-style: auto;
+  outline-width: 5px;
+  background-color: white;
+  box-shadow: 0 0 4px #0070D2;
+}
+
