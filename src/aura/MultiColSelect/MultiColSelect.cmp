@@ -1,0 +1,78 @@
+<aura:component>
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+  <aura:attribute name="fieldName" type="String" />
+  <aura:attribute name="fieldAPIName" type="String" />
+  <aura:attribute name="items" type="Object[]" description="items on the left - source" />
+  <aura:attribute name="selectedItems" type="Object[]" description="items on the right - destination" />
+
+  <aura:attribute name="sourceHighlightedItem" type="Object" description="an item ready to be transferred to the selectedItems array" />
+  <aura:attribute name="sourceHighlightedItems" type="Object[]" description="a set of items ready to be transferred to the selectedItems array" />
+
+  <aura:attribute name="destHighlightedItem" type="Object" description="an item ready to be transferred to the selectedItems array" />
+  <aura:attribute name="destHighlightedItems" type="Object[]" description="a set of items ready to be transferred to the selectedItems array" />
+
+  <aura:registerEvent name="multiColumnSelectChange" type="c:DataChange" />
+
+  <div class="slds">
+
+    <div class="slds-picklist--draggable slds-grid">
+      <div class="slds-assistive-text" id="drag-live-region" aria-live="assertive"></div>
+      <div class="slds-assistive-text" id="option-drag-label">Press space bar when on an item, to move it within the list. CMD plus left and right arrow keys, to move items between lists.</div>
+      <div class="slds-form-element">
+        <span class="slds-form-element__label" id="label-45">{!v.fieldName}</span>
+        <div class="slds-picklist" role="application" ondrop="{!c.handleOnDrop}" ondragenter="{!c.handleOnDragEnterDummy}" ondragleave="{!c.handleOnDragLeaveDummy}" ondragover="{!c.handleOnDragOverDummy}">
+          <ul aria-describedby="option-drag-label" aria-labelledby="label-45" aria-multiselectable="true" class="slds-picklist__options slds-picklist__options--multi" role="listbox" tabindex="0">
+
+            <aura:iteration items="{!v.items}" var="item">
+
+              <li class="{! 'slds-picklist__item slds-is-draggable ' + item.style}" draggable="true" ondragstart="{!c.handleDragStartFromSource}" id="{!item.sort}" aria-selected="false" role="option" tabindex="{!item.sort}" onclick="{!c.handleListClickSource}">
+                <span class="slds-truncate">{!item.sort} : {!item.value}</span>
+              </li>
+
+            </aura:iteration>
+          </ul>
+        </div>
+      </div>
+      <div class="slds-grid slds-grid--vertical">
+        <button class="slds-button slds-button--icon-container slds-button--icon-small" title="Right" onclick="{!c.handleAddItemsFromDestination}">
+          <lightning:icon iconName="utility:left" size="small" class="slds-button__icon slds-button__icon--large" />
+          <span class="slds-assistive-text">Move Selection to Second Category</span>
+        </button>
+        <button class="slds-button slds-button--icon-container slds-button--icon-small" title="Left" onclick="{!c.handleAddItemsFromSource}">
+          <lightning:icon iconName="utility:right" size="small" class="slds-button__icon slds-button__icon--large" />
+          <span class="slds-assistive-text">Move Selection to First Category</span>
+        </button>
+      </div>
+      <div class="slds-form-element">
+        <span class="slds-form-element__label" id="label-46">{!'Selected ' + v.fieldName + ' Values'}</span>
+        <div aura:id="selectedItems" class="slds-picklist " role="application" ondragenter="{!c.handleOnDragEnter}" ondragleave="{!c.handleOnDragLeave}" ondragover="{!c.handleOnDragOver}" ondrop="{!c.handleOnDrop}">
+          <ul aria-describedby="option-drag-label" aria-labelledby="label-46" aria-multiselectable="true" class="slds-picklist__options slds-picklist__options--multi" role="listbox" tabindex="0">
+            <aura:iteration items="{!v.selectedItems}" var="selectedItem">
+
+              <li aria-selected="false" class="{! 'slds-picklist__item slds-is-draggable ' + selectedItem.style}" draggable="true" id="{!selectedItem.sort}" onclick="{!c.handleListClickDestination}" ondragstart="{!c.handleDragStartFromDestination}" ondrop="{!c.handleOnDropSelf}" role="option" tabindex="0">
+                <span class="slds-truncate">{!selectedItem.sort} : {!selectedItem.value}</span>
+              </li>
+
+            </aura:iteration>
+          </ul>
+        </div>
+      </div>
+      <div class="slds-grid slds-grid--vertical">
+
+        <button class="slds-button slds-button--icon-container slds-button--icon-small" title="Up" onclick="{!c.handleReorderItemUp}">
+          <lightning:icon iconName="utility:up" size="small" class="slds-button__icon slds-button__icon--large" />
+          <span class="slds-assistive-text">Move Selection Up</span>
+        </button>
+
+        <button class="slds-button slds-button--icon-container slds-button--icon-small" title="Down" onclick="{!c.handleReorderItemDown}">
+          <lightning:icon iconName="utility:down" size="small" class="slds-button__icon slds-button__icon--large" />
+          <span class="slds-assistive-text">Move Selection Down</span>
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+</aura:component>
