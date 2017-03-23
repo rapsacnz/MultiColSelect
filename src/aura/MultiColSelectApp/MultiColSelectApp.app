@@ -127,10 +127,23 @@
   }
   ]"/>
     
+  <aura:attribute name="stagename" type="Object[]" default="[
+  {
+    'label': 'In Credit Repair',
+    'value': 'In Credit Repair'
+  },
+  {
+    'label': 'Annual Review',
+    'value': 'Annual Review'
+  },
+  {
+    'label': 'Watching Rates',
+    'value': 'Watching Rates'
+  }]"/>
+    
   <div class="slds">
     <div class="slds-box">
-      <c:MultiColSelect fieldName="Opportunity Stage" fieldAPIName="StageName" items="{!v.stagenames}" />
+      <c:MultiColSelect fieldName="Opportunity Stage" allValues="{!v.stagenames}" selectedValues="{!v.stagename}"  />
     </div>     
   </div>
-
 </aura:application>
