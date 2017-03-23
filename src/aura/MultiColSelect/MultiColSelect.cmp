@@ -3,17 +3,23 @@
   <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 
   <aura:attribute name="fieldName" type="String" />
-  <aura:attribute name="fieldAPIName" type="String" />
-  <aura:attribute name="items" type="Object[]" description="items on the left - source" />
-  <aura:attribute name="selectedItems" type="Object[]" description="items on the right - destination" />
 
-  <aura:attribute name="sourceHighlightedItem" type="Object" description="an item ready to be transferred to the selectedItems array" />
-  <aura:attribute name="sourceHighlightedItems" type="Object[]" description="a set of items ready to be transferred to the selectedItems array" />
+  <aura:attribute name="allValues" type="Object[]" description="all available values for this field" access="public"  />
+  <aura:attribute name="selectedValues" type="Object[]" description="selected values on this field" access="public" />
 
-  <aura:attribute name="destHighlightedItem" type="Object" description="an item ready to be transferred to the selectedItems array" />
-  <aura:attribute name="destHighlightedItems" type="Object[]" description="a set of items ready to be transferred to the selectedItems array" />
+  <aura:attribute name="items" type="Object[]" description="items on the left - source" access="private"  />
+  <aura:attribute name="selectedItems" type="Object[]" description="items on the right - destination" access="private" />
 
-  <aura:registerEvent name="multiColumnSelectChange" type="c:DataChange" />
+  <aura:attribute name="sourceHighlightedItem" type="Object" description="an item ready to be transferred to the selectedItems array" access="private" />
+  <aura:attribute name="sourceHighlightedItems" type="Object[]" description="a set of items ready to be transferred to the selectedItems array" access="private" />
+
+  <aura:attribute name="destHighlightedItem" type="Object" description="an item ready to be transferred to the selectedItems array" access="private" />
+  <aura:attribute name="destHighlightedItems" type="Object[]" description="a set of items ready to be transferred to the selectedItems array" access="private" />
+
+  <aura:attribute name="storedTimer" type="Object" description="storing a timer allows it to be cancelled" access="private" />
+  <aura:attribute name="changeEventScheduled" type="Boolean" description="set when we are scheduled to send an event" access="private" />
+
+  <aura:registerEvent name="multiColumnSelectChange" type="c:SPEAR_DataChange" />
 
   <div class="slds">
 
