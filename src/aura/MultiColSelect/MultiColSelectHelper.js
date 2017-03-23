@@ -1,6 +1,7 @@
 ({
 	doInit: function(component) {
     //at this stage, do nothing
+    //causes a performance degradation - to prevent, pass in objects that contain sort and type attributes
     var items = component.get("v.items");
     items.forEach( function(item,index){
       item.sort = index;
@@ -72,6 +73,7 @@
     //write all values back
     component.set(sourceName,source);
     component.set(destinationName,destination);
+    this.broadcastDataChange(component);
 
   },
 
@@ -115,6 +117,8 @@
 
     item.style  = ' spear-focus ';
     component.set(selectedItemName,item);
+    this.broadcastDataChange(component);
+
 
   },
 
@@ -163,6 +167,8 @@
       component.set("v.selectedItems",selectedItems);
       event.preventDefault();
       event.stopPropagation();
+      this.broadcastDataChange(component);
+
     }
     //if not destination, allow to be handled by parent
   },
@@ -194,6 +200,27 @@
 
     component.set("v.selectedItems",selectedItems);
     component.set("v.items",items);
+    this.broadcastDataChange(component);
+  },
+
+  broadcastDataChange : function(component){
+
+    component.set("v.changeEventScheduled",true);
+    var timer = component.get("v.storedTimer");
+    if (timer){
+      window.clearTimeout(timer);
+    }
+
+    timer = window.setTimeout(
+      $A.getCallback(function() {
+        var compEvent = component.getEvent("multiColumnSelectChange");
+        compEvent.setParams({ "type": "multiColumnSelectChange","data" : component.get('v.selectedItems')});
+        compEvent.fire();
+        component.set("v.changeEventScheduled",false);
+        console.log('event fired regular helper ' + JSON.stringify(compEvent.getParams()) );
+
+      }), 1000
+    );
   },
 
 
