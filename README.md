@@ -3,7 +3,7 @@ A Lightning Multi Column Select List with Drag and Drop
 
 To use, look at the MultiColSelectApp app. Eg:
 
-   <aura:application access="global" extends="force:slds" >
+    <aura:application access="global" extends="force:slds" >
       <aura:attribute name="stagenames" type="Object[]" default="[
       {
         'label': 'Annual Review',
