@@ -1,13 +1,8 @@
 ({
 	doInit: function(component) {
-    //at this stage, do nothing
-    //causes a performance degradation - to prevent, pass in objects that contain sort and type attributes
-    var items = component.get("v.items");
-    items.forEach( function(item,index){
-      item.sort = index;
-      item.type = 'source';
-    });
-    component.set("v.items",items);
+
+    this.initializeLists(component);
+
   },
 
   handleListClick : function(component,event, listName, selectedListName, selectedItemName ){
@@ -203,6 +198,30 @@
     this.broadcastDataChange(component);
   },
 
+  initializeLists : function (component) {
+
+    var selectedItems = component.get("v.selectedValues");
+    var items = component.get("v.allValues");
+
+    //remove any overlapping values. init with correct values
+    items = this.xorSourceItems(items,selectedItems);
+
+    //could have initilized in the above loop... but that would violate single resp principle
+    items.forEach( function(item,index){
+      item.sort = index;
+      item.type = 'source';
+    });
+    
+    selectedItems.forEach( function(item,index){
+      item.sort = index;
+      item.type = 'destination';
+    });
+
+    component.set("v.items",items);
+    component.set("v.selectedItems",selectedItems); 
+
+  },
+
   broadcastDataChange : function(component){
 
     component.set("v.changeEventScheduled",true);
@@ -330,5 +349,21 @@
     });
     return items;
   },
+
+  xorSourceItems : function(source,dest) {
+    var itemsToReturn = [];
+    source.forEach(function(sourceItem, sourceIndex) {
+      var match = false;
+      dest.forEach(function(destItem, destIndex) {
+        if (destItem.value == sourceItem.value) {
+          match = true;
+        }
+      });
+      if (!match){
+          itemsToReturn.push(sourceItem)
+      }
+    });
+    return itemsToReturn;
+  }
 
 })
