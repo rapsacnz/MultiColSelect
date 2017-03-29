@@ -210,12 +210,18 @@
     items.forEach( function(item,index){
       item.sort = index;
       item.type = 'source';
+      item.style = '';
     });
     
     selectedItems.forEach( function(item,index){
       item.sort = index;
       item.type = 'destination';
+      item.style = '';
     });
+
+    //needed to make work with locker service otherwise bindings don't work :(
+    items = JSON.parse(JSON.stringify(items));
+    selectedItems = JSON.parse(JSON.stringify(selectedItems));
 
     component.set("v.items",items);
     component.set("v.selectedItems",selectedItems); 
