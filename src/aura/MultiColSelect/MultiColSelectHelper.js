@@ -1,5 +1,5 @@
 ({
-	doInit: function(component) {
+  doInit: function(component) {
 
     this.initializeLists(component);
 
@@ -21,7 +21,7 @@
 
       var subset = this.getItems(start,end,items);
 
-      subset = this.addStyles(subset,' spear-focus ');
+      subset = this.addStyles(subset,' select-focus ');
       component.set(selectedListName,subset);
       component.set(selectedItemName,'');
     }
@@ -110,7 +110,7 @@
     source = this.sortItems(source);
     component.set(sourceName,source);
 
-    item.style  = ' spear-focus ';
+    item.style  = ' select-focus ';
     component.set(selectedItemName,item);
     this.broadcastDataChange(component);
 
@@ -130,18 +130,18 @@
 
   handleOnDragEnter: function(component, event) {
     var selectedItemsDiv = component.find("selectedItems");
-    $A.util.addClass(selectedItemsDiv,' spear-focus ');
+    $A.util.addClass(selectedItemsDiv,' select-focus ');
   },
 
   handleOnDragLeave: function(component, event) {
     var selectedItemsDiv = component.find("selectedItems");
-    $A.util.removeClass(selectedItemsDiv,' spear-focus ');
+    $A.util.removeClass(selectedItemsDiv,' select-focus ');
   },
 
   handleOnDropSelf: function(component, event) {
 
     var selectedItemsDiv = component.find("selectedItems");
-    $A.util.removeClass(selectedItemsDiv,' spear-focus ');
+    $A.util.removeClass(selectedItemsDiv,' select-focus ');
 
     var selectedItems = component.get("v.selectedItems");
 
@@ -172,7 +172,7 @@
     event.preventDefault();
 
     var selectedItemsDiv = component.find("selectedItems");
-    $A.util.removeClass(selectedItemsDiv,' spear-focus ');
+    $A.util.removeClass(selectedItemsDiv,' select-focus ');
 
     var selectedItems = component.get("v.selectedItems");
     var items = component.get("v.items");
