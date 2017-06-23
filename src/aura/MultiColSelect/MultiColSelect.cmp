@@ -19,7 +19,7 @@
   <aura:attribute name="storedTimer" type="Object" description="storing a timer allows it to be cancelled" access="private" />
   <aura:attribute name="changeEventScheduled" type="Boolean" description="set when we are scheduled to send an event" access="private" />
 
-  <aura:registerEvent name="multiColumnSelectChange" type="c:SPEAR_DataChange" />
+  <aura:registerEvent name="multiColumnSelectChange" type="c:DataChange" />
 
   <div class="slds">
 
