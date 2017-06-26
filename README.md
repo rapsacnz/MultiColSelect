@@ -37,4 +37,14 @@ At this point the component is very lightweight - you are required to pass in th
 When the selected items list changes, the component emits an event called "multiColumnSelectChange" of type "c:DataChange"
 The changed items will be in data.items parameter on the event.
 
+**NOTE** If you need to set the list source values dynamically, it's best to set them to the source list in one go and use a handler to detect the data change, in turn calling the init method:
+
+Add:
+
+    <aura:handler name="change" value="{!v.allValues}" action="{!c.doInit}"/>
+    
+Remove:
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
 Enjoy!
