@@ -1,4 +1,7 @@
 # MultiColSelect
+
+# Deprecated - use my new component here: https://github.com/rapsacnz/DualSelect
+
 A Lightning Multi Column Select List with Drag and Drop
 
 To use, look at the MultiColSelectApp app. Eg:
